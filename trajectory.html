@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>运动轨迹</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.css" rel="stylesheet" />
+		<style type="text/css">
+			.top-banner {
+				position: relative;
+				width: 100%;
+				background-color: #ccc;
+				opacity: 0.9;
+			}
+
+			.left {
+				margin: 0 20px;
+				padding: 5px 0;
+			}
+			.map {
+				position: absolute;
+				top: 31px;
+				left: 0;
+				bottom: 0;
+				display: block;
+				width: 100%;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content">
+			<div class="top-banner">
+				<div class="left">
+					2018年12月10日  星期三
+				</div>
+			</div>
+			<div id="map" class="map"></div>
+		</div>
+		<script src="js/mui.js"></script>
+		<script src="js/jquery/jquery.min.js"></script>
+		<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.6&key=a67f74a9f39540e85e75335a22123e45&plugin=Map3D,AMap.DistrictSearch,AMap.MarkerClusterer"></script>
+		<script type="text/javascript">
+			mui.init()
+			
+			var map;
+			function loadMap() {
+				var lon = 119.92,
+					lat = 28.45; // 3311 丽水 
+				var zoomMap = 14;
+				//if (area.length==4) zoomMap=12; 
+				//if (area.length==6) zoomMap=14;
+				//if (area.length>6)  zoomMap=18;
+				map = new AMap.Map('map', {
+					resizeEnable: true,
+					zoom: zoomMap,
+					//layers: [new AMap.TileLayer.Satellite()],
+					center: [lon, lat]
+				});
+			}
+			loadMap();
+		</script>
+	</body>
+
+</html>

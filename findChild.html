@@ -120,11 +120,11 @@
 				</ul>
 			</div>
 			<nav class="mui-bar mui-bar-tab">
-				<a class="mui-tab-item mui-active">
+				<a class="mui-tab-item mui-active" id="call">
 					<span class="mui-icon iconfont icon-tonghua"></span>
 					<span class="mui-tab-label">跟孩子通话</span>
 				</a>
-				<a class="mui-tab-item">
+				<a class="mui-tab-item" id="listen">
 					<span class="mui-icon iconfont icon-jianting"></span>
 					<span class="mui-tab-label">电话监听</span>
 				</a>
@@ -142,7 +142,10 @@
 		<script src="js/jquery/jquery.min.js"></script>
 		<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.6&key=a67f74a9f39540e85e75335a22123e45&plugin=Map3D,AMap.DistrictSearch,AMap.MarkerClusterer"></script>
 		<script type="text/javascript">
-			mui.init();
+			//mui初始化
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
 			
 			var map;
 			function loadMap() {
@@ -191,6 +194,7 @@
 			
 			$('.button-container').on("click",function(){
 				//getLeftTime("2018-12-26 14:41:00");
+				mui.toast("守护模式开启成功");
 				getLeftTime();
 			})
 
@@ -221,7 +225,49 @@
 					lasttime --;
 				}
 			}
+			
+			//刷新
+			function doFresh() {
+				//获取家长位置
+				//获取学生位置
+				//电子围栏
+				//电量
+				mui.ajax('http://server-name/login.php',{
+					data:{
+						username:'username',
+						password:'password'
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:10000,//超时时间设置为10秒；
+					headers:{'Content-Type':'application/json'},	              
+					success:function(data){
+						//服务器返回响应，根据响应结果，分析是否登录成功；
+					},
+					error:function(xhr,type,errorThrown){
+						//异常处理；
+						console.log(type);
+					}
+				});
+			}
+			
+			document.getElementById("call").addEventListener('tap', function() {
+				var btnArray = ['确认', '取消'];
+				mui.confirm('确认拨打设备电话，与孩子通话吗?', '确认信息', btnArray, function(e) {
+					if (e.index == 0) {
+						mui.toast("拨打电话");
+						window.location.href="tel://" + "15088629515"
+					}
+				})
+			});
+			document.getElementById("listen").addEventListener('tap', function() {
+				var btnArray = ['确认', '取消'];
+				mui.confirm('确认监听孩子通话吗?', '确认信息', btnArray, function(e) {
+					if (e.index == 0) {
+						mui.toast("监听通话");
+					}
+				})
+			});
 		</script>
 	</body>
-
 </html>
