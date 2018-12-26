@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/mui.picker.css" rel="stylesheet" />
+		<link href="css/mui.poppicker.css" rel="stylesheet" />
+		<link href="css/style.css" rel="stylesheet" />
+		<style type="text/css">
+			body{
+				background-color:#ddd;
+			}
+		</style>
+	</head>
+<body>
+	
+	<header class="mui-bar mui-bar-nav">
+		<h1 class="mui-title">学生:<span class="studentName">王小王</span><a href="#" id="selectStudent" style="color:blue;">切换</a></h1>
+	</header>
+	<div class="mui-content">
+		<div id="slider" class="mui-slider">
+			<div class="mui-slider-group mui-slider-loop">
+				<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+				<div class="mui-slider-item mui-slider-item-duplicate">
+					<a href="#">
+						<img src="http:\/\/placehold.it\/400x300">
+					</a>
+				</div>
+				<!-- 第一张 -->
+				<div class="mui-slider-item">
+					<a href="#">
+						<img src="http:\/\/placehold.it\/400x300">
+					</a>
+				</div>
+				<!-- 第二张 -->
+				<div class="mui-slider-item">
+					<a href="#">
+						<img src="http:\">
+					</a>
+				</div>
+				<!-- 第三张 -->
+				<div class="mui-slider-item">
+					<a href="#">
+						<img src="http:\">
+					</a>
+				</div>
+				<!-- 第四张 -->
+				<div class="mui-slider-item">
+					<a href="#">
+						<img src="http:\/\/placehold.it\/400x300">
+					</a>
+				</div>
+				<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+				<div class="mui-slider-item mui-slider-item-duplicate">
+					<a href="#">
+						<img src="http:\/\/placehold.it\/400x300">
+					</a>
+				</div>
+			</div>
+			<div class="mui-slider-indicator">
+				<div class="mui-indicator mui-active"></div>
+				<div class="mui-indicator"></div>
+				<div class="mui-indicator"></div>
+				<div class="mui-indicator"></div>
+			</div>
+		</div>
+		<div style="margin: 10px 30px;padding: 10px 0;">
+			<button type="button" class="mui-btn mui-btn-blue mui-btn-block">一键找孩子</button>
+		</div>
+	</div>
+	<div class="mui-content">
+		<ul class="mui-table-view mui-grid-view mui-grid-9">
+			<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4">
+				<a href="#">
+					<span class="mui-icon mui-icon-home"></span>
+					<div class="mui-media-body">学生考勤</div>
+				</a>
+			</li>
+			<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4">
+				<a href="#">
+					<span class="mui-icon mui-icon-chatboxes"><span class="mui-badge mui-badge-red">5</span></span>
+					<div class="mui-media-body">智能学生证</div>
+				</a>
+			</li>
+			<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4">
+				<a href="#">
+					<span class="mui-icon mui-icon-phone"></span>
+					<div class="mui-media-body">手机业务办理</div>
+				</a>
+			</li>
+			<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4">
+				<a href="#">
+					<span class="mui-icon mui-icon-person"></span>
+					<div class="mui-media-body">我的信息</div>
+				</a>
+			</li>
+			<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4">
+				<a href="#">
+					<span class="mui-icon mui-icon-help"></span>
+					<div class="mui-media-body">帮助中心</div>
+				</a>
+			</li>
+			<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4">
+				<a href="#">
+					<span class="mui-icon mui-icon-gear"></span>
+					<div class="mui-media-body">系统设置</div>
+				</a>
+			</li>
+		</ul>
+	</div>
+	<script src="js/mui.min.js"></script>
+	<script src="js/mui.picker.min.js"></script>
+	<script src="js/mui.poppicker.js"></script>
+	<script src="js/jquery/jquery.min.js"></script>
+	<script type="text/javascript">
+		mui.init();
+		
+		/* var newPicker = new mui.PopPicker({
+			layer: num  //num为选择器的层级数						
+		});
+		//获取数据 这里的data是一个多维(层)json
+		newData = getPickData(Data);
+		//设置数据到picker上 
+		newPicker.setData(newData); */
+		
+		var picker = new mui.PopPicker();
+		picker.setData([{
+			value:'aa',
+			text:'王小王',
+		},{
+			value:'bb',
+			text:'周小周',
+		}]);
+		picker.pickers[0].setSelectedValue('aa', 2000);
+		
+		var inpPick = document.getElementById('selectStudent');
+		//单击inpick					
+		inpPick.addEventListener('tap', function(event) {	
+			picker.show(function (selectItems) {
+				console.log(selectItems[0].text);//智子
+				console.log(selectItems[0].value);//zz
+				$(".studentName").text(selectItems[0].text);
+			})
+		})
+		
+		
+	function getPickData(data) {
+		var retData = new Array();
+		var retDatas = new Array();
+		for(var i = 0; i < data.length; i++) {
+			if(data[i].ChildrenClass.length != 0) {
+				retDatas = getPickData(data[i].ChildrenClass);
+				//这里的data[i].ChildrenClass 看你数据的具体形式填写替换，下面的InterID，InterName 也是
+			}
+			retData[i] = {
+				value: data[i].InterID,
+				text: data[i].InterName,
+				children: retDatas
+			}
+		}
+		return retData;
+	}
+	</script>
+</body>
+</html>
