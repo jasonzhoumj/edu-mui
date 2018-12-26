@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link href="css/mui.min.css" rel="stylesheet" />
+	<link href="css/style.css" rel="stylesheet" />
+	<style>
+		#get_code {
+			position: absolute;
+			right:5px;
+			bottom: 2px;
+		}
+		.login-icon-content {
+			text-align:center;
+			vertical-align: middle;
+			padding: 100px 0;
+		}
+		.mui-input-group {
+			margin-top: 30px;
+		}
+	</style>
+</head>
+<body>
+	<div class="mui-content">
+			<header class="mui-bar mui-bar-nav">
+				<h1 class="mui-title">登录</h1>
+			</header>
+			<div class="login-icon-content">
+				<img class="login-icon" align="center" src="images/login.jpg" width="100px" height="100px" />
+			</div>
+		<!-- <div class="mui-card">
+			<div class="mui-card-content">
+				<img src="images/login.jpg" />
+			</div>
+		</div> -->
+		<div class="mui-slider">
+			<div class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+				<a class="mui-control-item" href="#item1">普通登陆</a>
+				<a class="mui-control-item" href="#item2">快捷登陆</a>
+			</div>
+			<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-6"></div>
+			<div class="mui-slider-group">
+				<div id="item1" class="mui-slider-item mui-control-content mui-active">
+					<div class="mui-content">
+						<form id='login-form' class="mui-input-group">
+							<div class="mui-input-row">
+								<label>手机号</label>
+								<input id='account' type="text" class="mui-input-clear mui-input" placeholder="请输入手机号">
+							</div>
+							<div class="mui-input-row">
+								<label>密码</label>
+								<input id='password' type="password" class="mui-input-clear mui-input" placeholder="请输入密码">
+							</div>
+						</form>
+						<!-- <form class="mui-input-group">
+							<ul class="mui-table-view mui-table-view-chevron">
+								<li class="mui-table-view-cell">
+									自动登录
+									<div id="autoLogin" class="mui-switch">
+										<div class="mui-switch-handle"></div>
+									</div>
+								</li>
+							</ul>
+						</form> -->
+						<div class="mui-content-padded">
+							<button id='login' type="button" class="mui-btn mui-btn-block mui-btn-primary">登录</button>
+							<div class="link-area"><a id='reg'>注册账号</a> <span class="spliter">|</span> <a id='forgetPassword'>忘记密码</a></div>
+						</div>
+						<!-- <div class="mui-content-padded oauth-area">
+			
+						</div> -->
+					</div>
+				</div>
+				<div id="item2" class="mui-slider-item mui-control-content">
+					<div class="mui-content">
+						<form id='login-form' class="mui-input-group">
+							<div class="mui-input-row">
+								<label>手机号</label>
+								<input id='phone' type="text" class="mui-input-clear mui-input" placeholder="请输入手机号">
+							</div>
+							<div class="mui-input-row">
+								<label>验证码</label>
+								<input id='password' type="password" class="mui-input-clear mui-input" placeholder="请输入验证码">
+								<a href="javascript:senmobile(60);" class="mui-btn mui-btn-primary" id="get_code" disabled="true">获取验证码</a>
+							</div>
+						</form>
+						<!-- <form class="mui-input-group">
+							<ul class="mui-table-view mui-table-view-chevron">
+								<li class="mui-table-view-cell">
+									自动登录
+									<div id="autoLogin" class="mui-switch">
+										<div class="mui-switch-handle"></div>
+									</div>
+								</li>
+							</ul>
+						</form> -->
+						<div class="mui-content-padded">
+							<button id='login' type="button" class="mui-btn mui-btn-block mui-btn-primary">登录</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="js/mui.min.js"></script>
+	<script type="text/javascript">
+	mui.init()
+	
+	/* function login(){
+		mui.toast("登陆");
+		mui.openWindow({
+			id:'index',
+			url:'index.html'
+		});
+	} */
+	mui(".mui-content-padded").on('click','#login',function(){
+		mui.toast("登陆成功");
+		//获取id
+		//var id = this.getAttribute("id");
+		//传值给详情页面，通知加载新数据
+		//mui.fire(detail,'getDetail',{id:id});
+		//打开index页面
+		mui.openWindow({
+			id:'index',
+		  	url:'index.html'
+		});
+	}) 
+	
+	var issend=true; 
+	function senmobile(t) {
+		if(issend){ 
+			//验证电话号码手机号码 
+			var phoneObj = document.getElementById('phone'); 
+			//var pw = document.getElementById('passw'); 
+			var get_code=document.getElementById('get_code'); 
+			if (phoneObj.value != ""){
+				var phoneVal=phoneObj.value;  
+				var p1 = /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/;  
+				var me = false;  
+				if (p1.test(phoneVal)) me=true;  
+				if (!me){  
+					phoneObj.value='';  
+					mui.toast('请输入正确的手机号码'); 
+					phoneObj.focus();  
+					return false;  
+				//}else if(pw.length<6){ 
+				//	mui.toast('密码长度不够6'); 
+				//	return false;  
+				}else{ 
+					issend=false; 
+					/* JKD.ajax({ 
+						  url:"api_user.php?act=sendmobileregister", 
+						  dataType:"text", 
+						  type:"POST", 
+						  data:{'mobile':phoneObj.value}, 
+						  success:function(data){ 
+							if(data == '1'){ 
+								plus.nativeUI.toast('用户已存在！', {verticalAlign: 'center'}); 
+								return false; 
+							} 
+							var arr = data.split(","); 
+							if(arr[1] == '0'){ 
+								plus.nativeUI.toast('验证码发送成功！', {verticalAlign: 'center'}); 
+							}else{ 
+								plus.nativeUI.toast('验证码发送失败！', {verticalAlign: 'center'}); 
+							} 
+							 
+							for(i=1;i<=t;i++) {  
+								window.setTimeout("update_a(" + i + ","+t+")", i * 1000);  
+							}  
+		 
+						} 
+					}); */
+					
+					for(i=1;i<=t;i++) {  
+						window.setTimeout("update_a(" + i + ","+t+")", i * 1000);  
+					}  
+				} 
+			}else{ 
+				mui.toast('手机号码不能为空！',{ duration:'long', type:'div' }) 
+				//mui.toast('手机号码不能为空！', {verticalAlign: 'center'}); 
+				return false; 
+			} 
+		} 
+	} 
+ 
+	function update_a(num,t) { 
+		var get_code=document.getElementById('get_code'); 
+		if(num == t) {  
+			get_code.innerHTML =" 重新发送 ";  
+			issend=true;  
+		}  
+		else {  
+		   var printnr = t-num;  
+			get_code.innerHTML =printnr +" 秒后重发";  
+		}  
+	}
+	
+	
+	</script>
+</body>
+</html>
