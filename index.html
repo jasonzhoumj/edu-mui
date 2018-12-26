@@ -12,6 +12,10 @@
 			body{
 				background-color:#ddd;
 			}
+			img {
+				width:200;
+				height:150px;
+			}
 		</style>
 	</head>
 <body>
@@ -66,11 +70,11 @@
 				<div class="mui-indicator"></div>
 			</div>
 		</div>
-		<div style="margin: 10px 30px;padding: 10px 0;">
-			<button type="button" class="mui-btn mui-btn-blue mui-btn-block">一键找孩子</button>
+		<div style="margin: 0.8em 3em;padding: 0.4em 0;">
+			<button type="button" class="mui-btn mui-btn-blue mui-btn-block findChild">一键找孩子</button>
 		</div>
 	</div>
-	<div class="mui-content">
+	<div class="button-content">
 		<ul class="mui-table-view mui-grid-view mui-grid-9">
 			<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4">
 				<a href="#">
@@ -145,23 +149,28 @@
 			})
 		})
 		
-		
-	function getPickData(data) {
-		var retData = new Array();
-		var retDatas = new Array();
-		for(var i = 0; i < data.length; i++) {
-			if(data[i].ChildrenClass.length != 0) {
-				retDatas = getPickData(data[i].ChildrenClass);
-				//这里的data[i].ChildrenClass 看你数据的具体形式填写替换，下面的InterID，InterName 也是
+		$('.findChild').on("click",function(){
+			mui.openWindow({
+				id:'findChild',
+				url:'findChild.html'
+			});
+		})
+		function getPickData(data) {
+			var retData = new Array();
+			var retDatas = new Array();
+			for(var i = 0; i < data.length; i++) {
+				if(data[i].ChildrenClass.length != 0) {
+					retDatas = getPickData(data[i].ChildrenClass);
+					//这里的data[i].ChildrenClass 看你数据的具体形式填写替换，下面的InterID，InterName 也是
+				}
+				retData[i] = {
+					value: data[i].InterID,
+					text: data[i].InterName,
+					children: retDatas
+				}
 			}
-			retData[i] = {
-				value: data[i].InterID,
-				text: data[i].InterName,
-				children: retDatas
-			}
+			return retData;
 		}
-		return retData;
-	}
 	</script>
 </body>
 </html>

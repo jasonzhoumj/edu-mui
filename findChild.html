@@ -1,0 +1,227 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>找孩子</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.css" rel="stylesheet" />
+		<link href="css/iconfont.css" rel="stylesheet" />
+		<style type="text/css">
+			.top-banner {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				background-color: #ccc;
+				opacity: 0.9;
+				z-index: 108;
+			}
+
+			.left {
+				margin: 0 20px;
+				padding: 5px 0;
+			}
+
+			.iconfont {
+				font-size: 21px;
+			}
+
+			.electricity-container {
+				float: right;
+			}
+
+			.electricity {
+				position: absolute;
+				right: 33px;
+				top: 10px;
+				font-size: 11px;
+				color: red;
+			}
+
+			.button-container {
+				position: absolute;
+				top: 60px;
+				right: 0;
+				z-index: 108;
+				width: 100%;
+				text-align: center;
+				cursor:pointer;
+			}
+
+			.findChild {
+				background-color: #fff;
+				padding: 15px 35px;
+				border-radius: 5px;
+				box-shadow: 2px 2px 5px #888888;
+				font-weight: bold;
+			}
+
+			.map {
+				position: absolute;
+				top: 0;
+				left: 0;
+				bottom: 50px;
+				display: block;
+				width: 100%;
+			}
+
+			.tool-container {
+				position: absolute;
+				top: 50%;
+				right: 0;
+			}
+
+			.tool-container ul {
+				margin-right: 10px;
+				list-style-type: none;
+				text-align: center;
+			}
+
+			.tool-container ul>li {
+				border: 1px #C0C0C0 solid;
+				border-bottom-width: 0px;
+				background-color: #FFFFFF;
+				box-shadow: 5px 5px 5px #888888;
+				padding: 16px;
+				font-size: 20px;
+				font-weight: bolder;
+				cursor:pointer;
+			}
+
+			li.child {
+				color: red;
+			}
+			li.me {
+				color: green;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content">
+			<div class="top-banner">
+				<div class="left">
+					设备状态:
+					<span>已静音</span>
+					<span class="mui-icon iconfont icon-dianchi electricity-container">
+						<b class="electricity">20</b>
+					</span>
+				</div>
+			</div>
+			<div class="button-container">
+				<span class="findChild">守护孩子，一键跟踪</span>
+			</div>
+			<div id="map" class="map"></div>
+			<div class="tool-container">
+				<ul>
+					<li class="child"><span>孩</span></li>
+					<li class="me">我</li>
+					<li class="mui-icon iconfont icon-icon-refresh"></li>
+				</ul>
+			</div>
+			<nav class="mui-bar mui-bar-tab">
+				<a class="mui-tab-item mui-active">
+					<span class="mui-icon iconfont icon-tonghua"></span>
+					<span class="mui-tab-label">跟孩子通话</span>
+				</a>
+				<a class="mui-tab-item">
+					<span class="mui-icon iconfont icon-jianting"></span>
+					<span class="mui-tab-label">电话监听</span>
+				</a>
+				<a class="mui-tab-item">
+					<span class="mui-icon iconfont icon-weilan"></span>
+					<span class="mui-tab-label">电子围栏</span>
+				</a>
+				<a class="mui-tab-item">
+					<span class="mui-icon iconfont icon-guiji"></span>
+					<span class="mui-tab-label">运动轨迹</span>
+				</a>
+			</nav>
+		</div>
+		<script src="js/mui.js"></script>
+		<script src="js/jquery/jquery.min.js"></script>
+		<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.6&key=a67f74a9f39540e85e75335a22123e45&plugin=Map3D,AMap.DistrictSearch,AMap.MarkerClusterer"></script>
+		<script type="text/javascript">
+			mui.init();
+			
+			var map;
+			function loadMap() {
+				var lon = 119.92,
+					lat = 28.45; // 3311 丽水 
+				var zoomMap = 14;
+				//if (area.length==4) zoomMap=12; 
+				//if (area.length==6) zoomMap=14;
+				//if (area.length>6)  zoomMap=18;
+				map = new AMap.Map('map', {
+					resizeEnable: true,
+					zoom: zoomMap,
+					//layers: [new AMap.TileLayer.Satellite()],
+					center: [lon, lat]
+				});
+			}
+			loadMap();
+
+			$('.me').on("click",function(){
+				var options = {
+					'showButton': false,//是否显示定位按钮
+					//'buttonPosition': 'LB',//定位按钮的位置
+					/* LT LB RT RB */
+					//'buttonOffset': new AMap.Pixel(10, 20),//定位按钮距离对应角落的距离
+					'showMarker': true,//是否显示定位点
+					'markerOptions':{//自定义定位点样式，同Marker的Options
+					'offset': new AMap.Pixel(-18, -36),
+					'content':'<img src="https://a.amap.com/jsapi_demos/static/resource/img/user.png" style="width:36px;height:36px"/>'
+					},
+					'showCircle': true,//是否显示定位精度圈
+					'circleOptions': {//定位精度圈的样式
+						'strokeColor': '#0093FF',
+						'noSelect': true,
+						'strokeOpacity': 0.5,
+						'strokeWeight': 1,
+						'fillColor': '#02B0FF',
+						'fillOpacity': 0.25
+					}
+				}
+				AMap.plugin(["AMap.Geolocation"], function() {
+					var geolocation = new AMap.Geolocation(options);
+					map.addControl(geolocation);
+					geolocation.getCurrentPosition()
+				});
+			})
+			
+			$('.button-container').on("click",function(){
+				//getLeftTime("2018-12-26 14:41:00");
+				getLeftTime();
+			})
+
+			var lasttime = 30 * 60;
+			var isAutoArrive = false;
+			function getLeftTime() {
+			//function getLeftTime(endtime) {
+				//nowtime = new Date().getTime();
+				//lasttime = (Date.parse(new Date(endtime)) - nowtime) / 1000;
+				if (lasttime > 0) {
+					//lastdate = parseInt(lasttime / 3600 / 24);
+					//lasthours = parseInt(lasttime / 3600 % 24);
+					lastminutes = parseInt(lasttime / 60 % 60);
+					lastseconds = parseInt(lasttime % 60);
+					strtime = '守护时间剩余：' + ''
+						//+ lastdate + '' + '天' + '' 
+						//+ lasthours + '' + '时' + '' 
+						+ lastminutes + '' + '分' + ''
+						+ lastseconds + '' + '秒';
+					$('.findChild').text(strtime);
+				} else {
+					$('.findChild').text("守护孩子，一键跟踪");
+					//时间结束执行ajax代码逻辑
+				}
+				if (!isAutoArrive) {
+					//window.setTimeout('getLeftTime(\'' + endtime + '\')', 1000);
+					window.setTimeout('getLeftTime()', 1000);
+					lasttime --;
+				}
+			}
+		</script>
+	</body>
+
+</html>
