@@ -128,11 +128,11 @@
 					<span class="mui-icon iconfont icon-jianting"></span>
 					<span class="mui-tab-label">电话监听</span>
 				</a>
-				<a class="mui-tab-item">
+				<a class="mui-tab-item" id="electronicFence">
 					<span class="mui-icon iconfont icon-weilan"></span>
 					<span class="mui-tab-label">电子围栏</span>
 				</a>
-				<a class="mui-tab-item">
+				<a class="mui-tab-item" id="trajectory">
 					<span class="mui-icon iconfont icon-guiji"></span>
 					<span class="mui-tab-label">运动轨迹</span>
 				</a>
@@ -267,6 +267,26 @@
 						mui.toast("监听通话");
 					}
 				})
+			});
+			document.getElementById("trajectory").addEventListener('tap', function() {
+				mui.toast("跳转到运动轨迹页面");
+				//传值给详情页面，通知加载新数据
+				//mui.fire(detail,'getDetail',{id:id});
+				//打开trajectory页面
+				mui.openWindow({
+					id:'trajectory',
+					url:'trajectory.html'
+				});
+			});
+			document.getElementById("electronicFence").addEventListener('tap', function() {
+				mui.toast("跳转到电子围栏页面");
+				//传值给详情页面，通知加载新数据
+				//mui.fire(detail,'getDetail',{id:id});
+				//打开electronicFence页面
+				mui.openWindow({
+					id:'electronicFence',
+					url:'electronicFence.html'
+				});
 			});
 		</script>
 	</body>
