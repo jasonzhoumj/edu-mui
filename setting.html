@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>设置</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.css" rel="stylesheet" />
+		<style type="text/css">
+			.mui-scroll{
+				padding: 10px;
+			}
+			.mui-btn{
+				background-color: gray;
+				width: 20%;
+			}
+			.mui-table-view{
+				margin: 10px 0 0 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-page-content">
+			<div class="mui-scroll">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell">
+						<a>内置手机号码<span class="mui-pull-right">12345678910</span></a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a>设备IMEI号码<span class="mui-pull-right">12345678910</span></a>
+					</li>
+				</ul>
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell"><a href="family_number.html">亲情号码<span class="mui-icon mui-icon-arrowright mui-pull-right"></span></a></li>
+					<li class="mui-table-view-cell">远程关机
+					<button id="promptBtn" type="button" class="mui-btn" style="color: white;">关机</button></li>
+				</ul>
+			</div>
+		</div>
+		<script src="js/mui.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			//mui初始化
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+
+			document.getElementById("confirmBtn").addEventListener('tap', function() {
+				var btnArray = ['取消', '确定'];
+				mui.confirm('确认关机吗？关机后将无法跟踪定位与通话', 'Hello MUI', btnArray, function(e) {
+					if (e.index == 1) {
+						info.innerText = '你刚确认MUI是个好框架';
+					} else {
+						info.innerText = 'MUI没有得到你的认可，继续加油'
+					}
+				})
+			});
+		</script>
+	</body>
+
+</html>

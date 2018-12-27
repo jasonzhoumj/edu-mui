@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>个人资料</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.css" rel="stylesheet" />
+		<style>
+			.mui-box{
+				padding: 10px;
+				width: 100%;
+				height: 100%;
+				background-color: white;
+			}
+			.mui-div{
+				width: 100%;
+				height: 40px;
+				border-bottom: #777777 solid 1px;
+				margin: 20px 0px;
+			}
+			.button{
+				padding: 10 0px;
+			}
+			button{
+				width: 60%;
+				display:block;margin:0 auto
+			}
+			input{
+				border: none;
+			}
+			input:focus{ 
+				border:1px solid grey; 
+			}
+		</style>
+	</head>
+
+	<body>
+		<div >
+			<div class="mui-box">
+				<div class="mui-div">
+					<span>姓名<input class="mui-pull-right" placeholder="请输入"/></span>
+				</div>
+				<div class="mui-div">
+					<span>性别<input class="mui-pull-right" placeholder="请输入"/></span>
+				</div>
+				<div class="mui-div">
+					<span>职业<input class="mui-pull-right" placeholder="请输入"/></span>
+				</div>
+				<div class="mui-div">
+					<span>工作单位<input class="mui-pull-right" placeholder="请输入"/></span>
+				</div>
+				<div class="button">
+					<button>完成</button>
+				</div>
+			</div>
+		</div>
+		
+		<script src="js/mui.js"></script>
+		<script type="text/javascript">
+			mui.init()
+		</script>
+	</body>
+
+</html>
