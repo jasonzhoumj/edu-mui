@@ -34,7 +34,7 @@
 				<ul class="mui-table-view">
 					<li class="mui-table-view-cell"><a href="family_number.html">亲情号码<span class="mui-icon mui-icon-arrowright mui-pull-right"></span></a></li>
 					<li class="mui-table-view-cell">远程关机
-					<button id="promptBtn" type="button" class="mui-btn" style="color: white;">关机</button></li>
+					<button id="confirmBtn" type="button" class="mui-btn" style="color: white;">关机</button></li>
 				</ul>
 			</div>
 		</div>
@@ -47,11 +47,11 @@
 
 			document.getElementById("confirmBtn").addEventListener('tap', function() {
 				var btnArray = ['取消', '确定'];
-				mui.confirm('确认关机吗？关机后将无法跟踪定位与通话', 'Hello MUI', btnArray, function(e) {
+				mui.confirm('确认关机吗？关机后将无法跟踪定位与通话', '', btnArray, function(e) {
 					if (e.index == 1) {
-						info.innerText = '你刚确认MUI是个好框架';
+						
 					} else {
-						info.innerText = 'MUI没有得到你的认可，继续加油'
+						
 					}
 				})
 			});

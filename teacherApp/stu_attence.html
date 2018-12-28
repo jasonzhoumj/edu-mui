@@ -1,0 +1,227 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>学生考勤</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.css" rel="stylesheet" />
+		<link href="../css/iconfont.css" rel="stylesheet" />
+		<link href="../css/mui.dtpicker.css" rel="stylesheet" />
+		<link href="../css/mui.picker.css" rel="stylesheet" />
+		<style type="text/css">
+			.top-banner {
+				position: relative;
+				width: 100%;
+				background-color: #fff;
+				opacity: 0.9;
+			}
+			.left {
+				margin: 0 20px;
+				padding: 15px 0;
+			}
+			.calendar-container {
+				float: right;
+				font-size:23px;
+			}
+			.chart {
+				height: 200px;
+				margin: 0px;
+				padding: 0px;
+			}
+			.mui-div{
+				width: 100%;
+				height: 30px;
+				margin: 20px 0px;
+				text-align: center;
+			}
+			.mui-box{
+				padding: 10px;
+				width: 100%;
+				height: 100%;
+				background-color: white;
+			}
+			input{
+				margin: 0 0 0 10px;
+			}
+			.floatleft{
+				float: left;
+			}
+			.mui-table-view-cell{
+				text-align: center;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content">
+			<div class="top-banner">
+				<div class="left">
+					<span class="nowTime">2018年12月10日  星期三</span>
+					<span class="mui-icon iconfont icon-rili calendar-container"></span>
+				</div>
+			</div>
+			<div class="mui-content-padded">
+				<div class="chart" id="main"></div>
+			</div>
+			<div class="mui-box">
+				<div class="mui-div">
+					<span>学生姓名<input placeholder="请输入..."/></span>
+					<span class="mui-icon mui-icon-search"></span>
+				</div>
+			</div>
+			<div>
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right floatleft">
+							姓名
+						</a>
+						<span>学号</span>
+					</li>
+					<li class="mui-table-view-cell">
+						<a href="attence_detail.html">
+							<a class="floatleft">
+								张三
+							</a>
+							<span>20181228</span>
+							<span class="mui-icon mui-icon-arrowright mui-pull-right"></span>
+						</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a href="attence_detail.html">
+							<a class="floatleft">
+								李四
+							</a>
+							<span>12345678910</span>
+							<span class="mui-icon mui-icon-arrowright mui-pull-right"></span>
+						</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a href="attence_detail.html">
+							<a class="floatleft">
+								王五
+							</a>
+							<span>123456789987654321</span>
+							<span class="mui-icon mui-icon-arrowright mui-pull-right"></span>
+						</a>
+					</li>			
+			</ul>
+			</div>
+		</div>
+		<script src="../js/mui.js"></script>
+		<script src="../js/mui.dtpicker.js"></script>
+		<script src="../js/mui.picker.min.js"></script>
+		<script src="../js/jquery/jquery.min.js"></script>
+		<script src="../js/echarts-all.js"></script>
+		<script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+		mui.init()
+        var myChart = echarts.init(document.getElementById('main'));
+        var option={
+                tooltip : {
+					trigger: 'item',
+					formatter: "{a} <br/>{b} : {c} ({d}%)"
+				},
+				legend: {
+					orient : 'vertical',
+					x : 'left',
+					data:['缺勤','打卡']
+				},
+				toolbox: {
+					show : false,
+					feature : {
+						mark : {show: true},
+						dataView : {show: true, readOnly: false},
+						magicType : {
+							show: true, 
+							type: ['pie', 'funnel'],
+							option: {
+								funnel: {
+									x: '25%',
+									width: '50%',
+									funnelAlign: 'center',
+									max: 1548
+								}
+							}
+						},
+						restore : {show: true},
+						saveAsImage : {show: true}
+					}
+				},
+				calculable : true,
+				series : [
+					{
+						name:'访问来源',
+						type:'pie',
+						radius : ['60%', '80%'],
+						itemStyle : {
+							normal : {
+								label : {
+									show : false
+								},
+								labelLine : {
+									show : false
+								}
+							},
+							emphasis : {
+								label : {
+									show : true,
+									position : 'center',
+									textStyle : {
+										fontSize : '30',
+										fontWeight : 'bold'
+									}
+								}
+							}
+						},
+						data:[
+							{value:335, name:'打卡'},
+							{value:310, name:'缺勤'},
+						]
+					}
+				]
+			}
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+ 
+ 
+		function nowDate(myDate){
+			if(myDate != '' || typeof(myDate) != 'undefined'){
+				//var myDate = new Date();
+				var year = myDate.getFullYear() + "";
+				var month = myDate.getMonth() + 1 + "";
+				var day = myDate.getDate() + ""; //获取当前日(1-31)
+				if(month.length < 2) {
+					month = "0" + month;
+				}
+				var week = myDate.getDay();//获取当前星期X(0-6,0代表星期天)
+				var weekday=["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];
+				var weekStr = weekday[week]
+				
+				var nowTime = year + "年" + month  + "月" + day + "日   " + weekStr;
+				$('.nowTime').text(nowTime);
+			}
+		}
+		$('.calendar-container').on('click', function(){
+			var dtpicker = new mui.DtPicker({
+				"type": "date",//设置日历初始视图模式
+				//"beginDate": new Date(nowYear,nowMonth,nowDay)//设置开始日期
+				"endDate": new Date(),//设置结束日期
+				//"labels": ['Year','Mon','Day','hour', 'min'],//设置默认标签
+				/* "customData": {
+					"h": [ 
+						{ value: "am", text: "上午" },
+						{ value: "pm", text: "下午" },
+					]//时间日期别名
+				} */
+			})
+			dtpicker.show(function(e) { 
+				nowDate(new Date(e.y.value,e.m.value - 1,e.d.value));
+				//请求轨迹点
+			})
+		})
+		nowDate(new Date());
+    </script>
+	</body>
+
+</html>

@@ -1,0 +1,144 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>考勤详情</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.css" rel="stylesheet" />
+		<link href="../css/iconfont.css" rel="stylesheet" />
+		<link href="../css/mui.dtpicker.css" rel="stylesheet" />
+		<link href="../css/mui.picker.css" rel="stylesheet" />
+		<style type="text/css">
+			.top-banner {
+				position: relative;
+				width: 100%;
+				background-color: #fff;
+				opacity: 0.9;
+			}
+			.left {
+				margin: 0 20px;
+				padding: 15px 0;
+			}
+			.calendar-container {
+				float: right;
+				font-size:23px;
+			}
+			.name{
+				text-align: center;
+				padding: 20px;
+				font-size: 20px;
+				letter-spacing: 3px;
+			}
+			.item{
+				background-color: #FFFFFF;
+				margin: 20px 0px;
+			}
+			.itemlist{
+				padding: 10px;
+				margin: 10px;
+			}
+			.span{
+				float: right;
+				color: green;
+			}
+			.span2{
+				float: right;
+				color: red;
+			};
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content">
+			<div class="top-banner">
+				<div class="name">学生姓名:<span>张三</span></div>
+				<div class="left">
+					<span class="nowTime">2018年12月10日  星期三</span>
+					<span class="mui-icon iconfont icon-rili calendar-container"></span>
+				</div>
+			</div>
+			<div class="item">
+				<div class="itemlist"><span>07:34:56</span><span class="span">进校</span></div>
+				<div class="itemlist"><span>07:20:20</span><span class="span2">离校</span></div>
+				<li class="mui-table-view-cell mui-collapse" style=" list-style-type:none;">
+					<a class="mui-navigate-right">
+						当天详情
+					</a>
+					<ul class="mui-table-view mui-table-view-chevron">
+						<li class="mui-table-view-cell">
+							<span>07:20:20</span><span class="span2">离校</span>
+						</li>
+						<li class="mui-table-view-cell mui-plus-visible">
+							<span>07:20:20</span><span class="span2">离校</span>
+						</li>
+						<li class="mui-table-view-cell">
+							<span>07:20:20</span><span class="span2">离校</span>
+						</li>
+						<li class="mui-table-view-cell">
+							<span>07:20:20</span><span class="span2">离校</span>
+						</li>
+						<li class="mui-table-view-cell">
+							<span>07:20:20</span><span class="span2">离校</span>
+						</li>
+						<li class="mui-table-view-cell mui-plus-visible">
+							<span>07:20:20</span><span class="span2">离校</span>
+						</li>
+						<li class="mui-table-view-cell">
+							<span>07:20:20</span><span class="span2">离校</span>
+						</li>
+						<li class="mui-table-view-cell">
+							<span>07:20:20</span><span class="span2">离校</span>
+						</li>
+					</ul>
+				</li>
+			</div>
+		</div>
+		<script src="../js/mui.js"></script>
+		<script src="../js/mui.dtpicker.js"></script>
+		<script src="../js/mui.picker.min.js"></script>
+		<script src="../js/jquery/jquery.min.js"></script>
+		<script src="../js/echarts-all.js"></script>
+		<script type="text/javascript">
+		// 基于准备好的dom，初始化echarts实例
+		mui.init()
+		function nowDate(myDate){
+			if(myDate != '' || typeof(myDate) != 'undefined'){
+				//var myDate = new Date();
+				var year = myDate.getFullYear() + "";
+				var month = myDate.getMonth() + 1 + "";
+				var day = myDate.getDate() + ""; //获取当前日(1-31)
+				if(month.length < 2) {
+					month = "0" + month;
+				}
+				var week = myDate.getDay();//获取当前星期X(0-6,0代表星期天)
+				var weekday=["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];
+				var weekStr = weekday[week]
+				
+				var nowTime = year + "年" + month  + "月" + day + "日   " + weekStr;
+				$('.nowTime').text(nowTime);
+			}
+		}
+		$('.calendar-container').on('click', function(){
+			var dtpicker = new mui.DtPicker({
+				"type": "date",//设置日历初始视图模式
+				//"beginDate": new Date(nowYear,nowMonth,nowDay)//设置开始日期
+				"endDate": new Date(),//设置结束日期
+				//"labels": ['Year','Mon','Day','hour', 'min'],//设置默认标签
+				/* "customData": {
+					"h": [ 
+						{ value: "am", text: "上午" },
+						{ value: "pm", text: "下午" },
+					]//时间日期别名
+				} */
+			})
+			dtpicker.show(function(e) { 
+				nowDate(new Date(e.y.value,e.m.value - 1,e.d.value));
+				//请求轨迹点
+			})
+		});
+		nowDate(new Date());
+		</script>
+	</body>
+
+</html>
