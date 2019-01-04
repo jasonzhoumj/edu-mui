@@ -5,12 +5,13 @@
 	<title>登录</title>
 	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 	<link href="css/mui.min.css" rel="stylesheet" />
-	<link href="css/style.css" rel="stylesheet" />
+	<link href="css/iconfont.css" rel="stylesheet" />
 	<style>
 		#get_code {
 			position: absolute;
 			right:5px;
-			bottom: 2px;
+			bottom: 20%;
+			/* margin:auto; */
 		}
 		.login-icon-content {
 			text-align:center;
@@ -22,6 +23,24 @@
 		}
 		#get_code {
 			width:26% !important;
+		}
+		
+		.mui-icon {
+			font-size: 30px;
+		}
+		input {
+			height: 60px !important;
+		}
+		.mui-input-group .mui-input-row {
+			height: 60px !important;
+		}
+		
+		.mui-input-row label {
+			width: 15% !important;
+		}
+		.mui-input-row label~input {
+			width: 85% !important;
+		
 		}
 	</style>
 </head>
@@ -49,11 +68,11 @@
 					<div class="mui-content">
 						<form id='login-form' class="mui-input-group">
 							<div class="mui-input-row">
-								<label>手机号</label>
+								<label><span class="mui-icon mui-icon-contact"></span></label>
 								<input id='account' type="text" class="mui-input-clear mui-input" placeholder="请输入手机号">
 							</div>
 							<div class="mui-input-row">
-								<label>密码</label>
+								<label><span class="mui-icon mui-icon-locked"></span></label>
 								<input id='password' type="password" class="mui-input-clear mui-input" placeholder="请输入密码">
 							</div>
 						</form>
@@ -80,11 +99,11 @@
 					<div class="mui-content">
 						<form id='login-form' class="mui-input-group">
 							<div class="mui-input-row">
-								<label>手机号</label>
+								<label><span class="mui-icon mui-icon-contact"></span></label>
 								<input id='phone' type="text" class="mui-input-clear mui-input" placeholder="请输入手机号">
 							</div>
 							<div class="mui-input-row">
-								<label>验证码</label>
+								<label><span class="mui-icon iconfont icon-anquan"></span></label>
 								<input id='password' type="password" class="mui-input-clear mui-input" placeholder="请输入验证码">
 								<a href="javascript:senmobile(60);" class="mui-btn mui-btn-primary" id="get_code" disabled="true">获取验证码</a>
 							</div>
